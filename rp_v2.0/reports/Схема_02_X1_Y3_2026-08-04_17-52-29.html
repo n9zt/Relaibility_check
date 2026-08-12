@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчёт по расчёту надёжности - Схема 02</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .header-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .info-item {
+            padding: 5px 10px;
+        }
+        .info-item strong {
+            color: #2c3e50;
+        }
+        .schema-note {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        th {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #34495e;
+        }
+        td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #bdc3c7;
+        }
+        td.left {
+            text-align: left;
+            padding-left: 12px;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #e8f4f8;
+        }
+        .total-section {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .total-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #bdc3c7;
+        }
+        .total-item:last-child {
+            border-bottom: none;
+        }
+        .probabilities {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .prob-card {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #bdc3c7;
+        }
+        .prob-card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #3498db;
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .unit {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        @media print {
+            body {
+                background-color: white;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+                padding: 20px;
+            }
+            tr:hover {
+                background-color: inherit;
+            }
+            .prob-card {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Расчёт показателей надёжности радиоэлектронного устройства</h1>
+
+        
+
+        <div class="header-info">
+            <div class="info-item"><strong>X (десятки):</strong> 1</div>
+            <div class="info-item"><strong>Y (единицы):</strong> 3</div>
+            <div class="info-item"><strong>Сумма S = X + Y:</strong> 4</div>
+            <div class="info-item"><strong>Схема:</strong> Обнаружитель низкочастотных сигналов</div>
+            <div class="info-item"><strong>Условия эксплуатации:</strong> Стационарные (полевые) (α<sub>Σ</sub> = 1.07)</div>
+            <div class="info-item"><strong>Столбец таблицы λ<sub>баз</sub>:</strong> Наземная: подвижная</div>
+            <div class="info-item"><strong>Температура:</strong> 35°C</div>
+            <div class="info-item"><strong>Коэффициент нагрузки K<sub>н</sub>:</strong> 0.5</div>
+        </div>
+
+        <div class="schema-note">
+            <strong>Примечание:</strong> Рис. 4.4. Принципиальная схема обнаружителя низкочастотных сигналов
+        </div>
+
+        <h2>Расчёт интенсивности отказов</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Группа элементов</th>
+                    <th>УГО</th>
+                    <th>Позиционные обозначения</th>
+                    <th>Источник</th>
+                    <th>Количество n<sub>i</sub></th>
+                    <th>λ<sub>i баз</sub>, 10<sup>-6</sup> ч<sup>-1</sup></th>
+                    <th>α<sub>Σ</sub></th>
+                    <th>α<sub>5</sub></th>
+                    <th>Λ<sub>i</sub>, 10<sup>-6</sup> ч<sup>-1</sup></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>1</td>
+                    <td class="left">Резисторы постоянные плёночные</td>
+                    <td>R</td>
+                    <td class="left">R1,R3-R19</td>
+                    <td>стр. 4, С</td>
+                    <td>18</td>
+                    <td>0.7600</td>
+                    <td>1.07</td>
+                    <td>0.56</td>
+                    <td>8.197056</td>
+                </tr>
+
+                <tr>
+                    <td>2</td>
+                    <td class="left">Резисторы подстроечные</td>
+                    <td>R</td>
+                    <td class="left">R2</td>
+                    <td>стр. 4, В</td>
+                    <td>1</td>
+                    <td>0.5000</td>
+                    <td>1.07</td>
+                    <td>0.56</td>
+                    <td>0.299600</td>
+                </tr>
+
+                <tr>
+                    <td>3</td>
+                    <td class="left">Конденсаторы постоянной ёмкости керамические</td>
+                    <td>C</td>
+                    <td class="left">C1-C19</td>
+                    <td>стр. 4, Н</td>
+                    <td>19</td>
+                    <td>0.0340</td>
+                    <td>1.07</td>
+                    <td>0.51</td>
+                    <td>0.352522</td>
+                </tr>
+
+                <tr>
+                    <td>4</td>
+                    <td class="left">Катушки индуктивности</td>
+                    <td>L</td>
+                    <td class="left">L1, L2</td>
+                    <td>стр. 6, В</td>
+                    <td>2</td>
+                    <td>0.0230</td>
+                    <td>1.07</td>
+                    <td>1.00</td>
+                    <td>0.049220</td>
+                </tr>
+
+                <tr>
+                    <td>5</td>
+                    <td class="left">Диоды общего назначения</td>
+                    <td>VD</td>
+                    <td class="left">VD1, VD2</td>
+                    <td>стр. 6, Н</td>
+                    <td>2</td>
+                    <td>0.0490</td>
+                    <td>1.07</td>
+                    <td>0.92</td>
+                    <td>0.096471</td>
+                </tr>
+
+                <tr>
+                    <td>6</td>
+                    <td class="left">Оптоэлектронные приборы - излучатели</td>
+                    <td>VD</td>
+                    <td class="left">VD3</td>
+                    <td>стр. 7, Н</td>
+                    <td>1</td>
+                    <td>0.0035</td>
+                    <td>1.07</td>
+                    <td>1.00</td>
+                    <td>0.003745</td>
+                </tr>
+
+                <tr>
+                    <td>7</td>
+                    <td class="left">Транзисторы биполярные малой и средней мощности</td>
+                    <td>VT</td>
+                    <td class="left">VT1-VT3</td>
+                    <td>стр. 6, С</td>
+                    <td>3</td>
+                    <td>0.0017</td>
+                    <td>1.07</td>
+                    <td>0.39</td>
+                    <td>0.002128</td>
+                </tr>
+
+                <tr>
+                    <td>8</td>
+                    <td class="left">Переключатели</td>
+                    <td>SA</td>
+                    <td class="left">SA1</td>
+                    <td>стр. 8, В</td>
+                    <td>1</td>
+                    <td>0.0180</td>
+                    <td>1.07</td>
+                    <td>1.00</td>
+                    <td>0.019260</td>
+                </tr>
+
+                <tr>
+                    <td>9</td>
+                    <td class="left">Микросхемы аналоговые</td>
+                    <td>DA</td>
+                    <td class="left">DA1, DA2</td>
+                    <td>стр. 10, С</td>
+                    <td>2</td>
+                    <td>0.0280</td>
+                    <td>1.07</td>
+                    <td>1.00</td>
+                    <td>0.059920</td>
+                </tr>
+
+                <tr>
+                    <td>10</td>
+                    <td class="left">Микросхемы цифровые</td>
+                    <td>DD</td>
+                    <td class="left">DD1</td>
+                    <td>стр. 10, В</td>
+                    <td>1</td>
+                    <td>0.0230</td>
+                    <td>1.07</td>
+                    <td>1.00</td>
+                    <td>0.024610</td>
+                </tr>
+
+                <tr>
+                    <td>11</td>
+                    <td class="left">Пайки</td>
+                    <td>Па</td>
+                    <td class="left">Пайки</td>
+                    <td>стр. 9, Н</td>
+                    <td>135</td>
+                    <td>0.0010</td>
+                    <td>1.07</td>
+                    <td>1.00</td>
+                    <td>0.141561</td>
+                </tr>
+
+                <tr>
+                    <td>12</td>
+                    <td class="left">Разъёмы</td>
+                    <td>XS</td>
+                    <td class="left">Разъёмы</td>
+                    <td>стр. 8, С</td>
+                    <td>4</td>
+                    <td>0.1100</td>
+                    <td>1.07</td>
+                    <td>1.00</td>
+                    <td>0.470800</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <div class="total-section">
+            <div class="total-item">
+                <strong>Интенсивность отказов схемы Λ = ΣΛ<sub>i</sub>:</strong> 
+                9.72 × 10<sup>-6</sup> ч<sup>-1</sup>
+            </div>
+            <div class="total-item">
+                <strong>Средняя наработка до отказа T<sub>0</sub> = 1 / (Λ · 10<sup>-6</sup>):</strong> 
+                102914 ч
+            </div>
+        </div>
+
+        <h2>Вероятности безотказной работы и отказа</h2>
+        <div class="probabilities">
+
+            <div class="prob-card">
+                <h3>1 год</h3>
+                <p><strong>Время:</strong> 365 суток (8760 ч)</p>
+                <p><strong>P(t):</strong> 0.92</p>
+                <p><strong>Q(t):</strong> 0.082</p>
+            </div>
+
+            <div class="prob-card">
+                <h3>5 лет</h3>
+                <p><strong>Время:</strong> 1826 суток (43824 ч)</p>
+                <p><strong>P(t):</strong> 0.65</p>
+                <p><strong>Q(t):</strong> 0.35</p>
+            </div>
+
+            <div class="prob-card">
+                <h3>10 лет</h3>
+                <p><strong>Время:</strong> 3652 суток (87648 ч)</p>
+                <p><strong>P(t):</strong> 0.43</p>
+                <p><strong>Q(t):</strong> 0.57</p>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <p>Отчёт сформирован: 04.08.2026 17:52:29</p>
+            <p>Расчёт выполнен по заданию на контрольную работу №2</p>
+            <p style="font-size: 10px; color: #95a5a6;">
+                Примечание: Λ округлена до трёх значащих цифр, T₀ до целого числа, P(t) и Q(t) до двух значащих цифр
+            </p>
+        </div>
+    </div>
+</body>
+</html>
